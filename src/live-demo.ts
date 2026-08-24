@@ -14,7 +14,6 @@ const senderInboxId =
     env.AGENTMAIL_DEMO_SENDER_INBOX_ID ??
     (
         await agentMail.inboxes.create({
-            username: "support-triage-demo-sender",
             displayName: "Support Triage Demo Sender",
             clientId: "support-triage-demo-sender",
         })
