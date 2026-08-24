@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="640" viewBox="0 0 1280 640" role="img" aria-labelledby="title desc">
+  <title id="title">How the support triage agent works</title>
+  <desc id="desc">A customer email enters an AgentMail inbox. The app verifies the webhook, classifies the message, and applies support policy. Routine messages get a draft in the same thread, while sensitive messages are marked for human review.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#1e1e1e"/>
+    </marker>
+    <marker id="arrow-green" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#2b8a3e"/>
+    </marker>
+    <marker id="arrow-orange" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#e8590c"/>
+    </marker>
+    <marker id="arrow-purple" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#5f3dc4"/>
+    </marker>
+    <style>
+      text { font-family: Arial, Helvetica, sans-serif; }
+      .title { font-size: 40px; font-weight: 700; fill: #111827; }
+      .subtitle { font-size: 20px; font-weight: 400; fill: #495057; }
+      .primary { font-size: 24px; font-weight: 600; fill: #111827; text-anchor: middle; }
+      .secondary { font-size: 18px; font-weight: 400; fill: #495057; text-anchor: middle; }
+      .edge-label { font-size: 18px; font-weight: 500; fill: #495057; text-anchor: middle; }
+      .step { font-size: 18px; font-weight: 700; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <rect width="1280" height="640" fill="#ffffff"/>
+  <text class="title" x="60" y="72">How the support triage agent works</text>
+  <text class="subtitle" x="60" y="112">AgentMail keeps the incoming message, labels, and draft in one conversation.</text>
+
+  <rect x="60" y="220" width="210" height="100" rx="16" fill="#e7f5ff" stroke="#1971c2" stroke-width="3"/>
+  <text class="primary" x="165" y="279">Customer email</text>
+  <text class="step" x="88" y="214" fill="#1971c2">1</text>
+
+  <rect x="330" y="220" width="210" height="100" rx="16" fill="#e7f5ff" stroke="#1971c2" stroke-width="3"/>
+  <text class="primary" x="435" y="279">AgentMail inbox</text>
+  <text class="step" x="358" y="214" fill="#1971c2">2</text>
+
+  <rect x="600" y="155" width="230" height="92" rx="16" fill="#f3f0ff" stroke="#6741d9" stroke-width="3"/>
+  <text class="primary" x="715" y="200">Verify webhook</text>
+  <text class="secondary" x="715" y="229">Signature + inbox</text>
+  <text class="step" x="628" y="149" fill="#6741d9">3</text>
+
+  <rect x="600" y="285" width="230" height="92" rx="16" fill="#f3f0ff" stroke="#6741d9" stroke-width="3"/>
+  <text class="primary" x="715" y="330">Classify message</text>
+  <text class="secondary" x="715" y="359">Category + priority</text>
+  <text class="step" x="628" y="279" fill="#6741d9">4</text>
+
+  <path d="M715 420 L815 485 L715 550 L615 485 Z" fill="#f3f0ff" stroke="#6741d9" stroke-width="3" stroke-linejoin="round"/>
+  <text class="primary" x="715" y="493">Apply policy</text>
+  <text class="step" x="643" y="425" fill="#6741d9">5</text>
+
+  <rect x="890" y="220" width="330" height="110" rx="16" fill="#ebfbee" stroke="#2b8a3e" stroke-width="3"/>
+  <text class="primary" x="1055" y="270">Draft in the same thread</text>
+  <text class="secondary" x="1055" y="302">Human reviews and sends</text>
+
+  <rect x="890" y="440" width="330" height="110" rx="16" fill="#fff4e6" stroke="#e8590c" stroke-width="3"/>
+  <text class="primary" x="1055" y="490">Needs human review</text>
+  <text class="secondary" x="1055" y="522">No draft created</text>
+
+  <rect x="310" y="475" width="230" height="105" rx="16" fill="#f3f0ff" stroke="#5f3dc4" stroke-width="3"/>
+  <text class="primary" x="425" y="520">Retry state</text>
+  <text class="secondary" x="425" y="551">Reuse first decision</text>
+
+  <line x1="270" y1="270" x2="330" y2="270" stroke="#1e1e1e" stroke-width="3" marker-end="url(#arrow)"/>
+  <text class="edge-label" x="300" y="252">sends</text>
+
+  <line x1="540" y1="270" x2="600" y2="201" stroke="#1e1e1e" stroke-width="3" marker-end="url(#arrow)"/>
+  <text class="edge-label" x="500" y="200">message.received</text>
+
+  <line x1="715" y1="247" x2="715" y2="285" stroke="#1e1e1e" stroke-width="3" marker-end="url(#arrow)"/>
+  <line x1="715" y1="377" x2="715" y2="420" stroke="#1e1e1e" stroke-width="3" marker-end="url(#arrow)"/>
+
+  <line x1="815" y1="485" x2="890" y2="275" stroke="#2b8a3e" stroke-width="3" marker-end="url(#arrow-green)"/>
+  <text class="edge-label" x="868" y="351" fill="#2b8a3e">routine</text>
+
+  <line x1="815" y1="485" x2="890" y2="495" stroke="#e8590c" stroke-width="3" marker-end="url(#arrow-orange)"/>
+  <text class="edge-label" x="857" y="522" fill="#e8590c">sensitive</text>
+
+  <line x1="540" y1="527" x2="615" y2="500" stroke="#5f3dc4" stroke-width="3" marker-end="url(#arrow-purple)"/>
+  <text class="edge-label" x="580" y="560" fill="#5f3dc4">stored result</text>
+</svg>
