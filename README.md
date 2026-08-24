@@ -2,9 +2,11 @@
 
 Give a support agent its own AgentMail inbox. Routine questions become labeled, same-thread reply drafts; billing, account-access, and other sensitive requests wait for a person without generating a draft.
 
-[Watch the 26-second live run](assets/support-triage-live-run.mp4) or read the [complete cookbook](https://github.com/maniculehq/manicule/blob/codex/agentmail-support-triage-assets/tmp/agentmail-support-triage-cookbook/post.md).
+[Watch the 24-second guided run](assets/support-triage-guided-run.mp4) or read the [complete cookbook](https://github.com/maniculehq/manicule/blob/codex/agentmail-support-triage-assets/tmp/agentmail-support-triage-cookbook/post.md). The walkthrough uses a large cursor, visible click markers, and pauses on both label sets.
 
 ![Two support requests triaged in the AgentMail inbox](assets/agentmail-inbox-overview.png)
+
+![The routine draft-ready labels and billing human-review labels shown side by side](assets/agentmail-labels-closeup.png)
 
 ## What the demo proves
 
@@ -14,7 +16,7 @@ Give a support agent its own AgentMail inbox. Routine questions become labeled, 
 - Approved answers become same-thread drafts. Sensitive messages get a human-review label and no draft.
 - SQLite stores one canonical decision per event—even when deliveries overlap. A stable AgentMail `clientId` and `triage:processed` make the remaining network retries consistent.
 
-![A routine export question with its generated draft](assets/agentmail-draft-composer.png)
+![A routine export question with its approved draft](assets/agentmail-draft-composer.png)
 
 ![A billing request sent to human review without a draft](assets/agentmail-billing-review.png)
 
