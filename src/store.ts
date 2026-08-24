@@ -33,11 +33,19 @@ export class TriageStore {
         return TriageDecisionSchema.parse(JSON.parse(row.decision_json))
     }
 
-    put(eventId: string, decision: TriageDecision): void {
+    put(eventId: string, decision: TriageDecision): TriageDecision {
         this.#db
             .query(
                 "INSERT INTO triage_decision (event_id, decision_json) VALUES (?, ?) ON CONFLICT (event_id) DO NOTHING",
             )
             .run(eventId, JSON.stringify(decision))
+        const stored = StoredDecisionRowSchema.parse(
+            this.#db
+                .query(
+                    "SELECT decision_json FROM triage_decision WHERE event_id = ?",
+                )
+                .get(eventId),
+        )
+        return TriageDecisionSchema.parse(JSON.parse(stored.decision_json))
     }
 }

@@ -12,7 +12,7 @@ Give a support agent its own AgentMail inbox. Routine questions become labeled, 
 - OpenAI returns a closed category, priority, summary, and optional knowledge-article key.
 - Application code—not the model—decides whether a draft is allowed.
 - Approved answers become same-thread drafts. Sensitive messages get a human-review label and no draft.
-- SQLite, a stable AgentMail `clientId`, and `triage:processed` make retries consistent.
+- SQLite stores one canonical decision per event—even when deliveries overlap. A stable AgentMail `clientId` and `triage:processed` make the remaining network retries consistent.
 
 ![A routine export question with its generated draft](assets/agentmail-draft-composer.png)
 
@@ -29,7 +29,7 @@ bun install
 cp .env.example .env
 ```
 
-Add `AGENTMAIL_API_KEY`, `OPENAI_API_KEY`, and your tunnel's `/webhooks` URL to `.env`. Create the inbox and webhook:
+Add `AGENTMAIL_API_KEY`, `OPENAI_API_KEY`, and your tunnel's `/webhooks` URL to `.env`. Create the inbox and webhook. The setup omits `username`, so AgentMail generates an available address and the stable `clientId` reuses it within your organization:
 
 ```sh
 bun run setup:agentmail
@@ -65,7 +65,7 @@ bun run typecheck
 bun run test
 ```
 
-The test suite covers signature rejection, successful signed delivery, same-thread drafting, sensitive-message handoff, and processed-event replay.
+The test suite covers signature rejection, successful signed delivery, same-thread drafting, sensitive-message handoff, overlapping-delivery consistency, and processed-event replay.
 
 ## Safety boundary
 

@@ -35,7 +35,7 @@ export async function processSupportEvent(input: {
                 input.event.message.text ??
                 "(no plain-text body)",
         })
-        input.store.put(input.event.event_id, triage)
+        triage = input.store.put(input.event.event_id, triage)
     }
 
     const action = decideSupportAction(triage)

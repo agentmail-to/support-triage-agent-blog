@@ -151,6 +151,58 @@ describe("processSupportEvent", () => {
         expect(harness.labels).toContain("triage:needs-human-review")
     })
 
+    it("uses the stored winner when overlapping deliveries classify differently", async () => {
+        const harness = createAgentMailHarness()
+        const store = new TriageStore(":memory:")
+        let markFirstClassified: () => void = () => {
+            throw new Error("First classification signal is not ready")
+        }
+        const firstClassified = new Promise<void>((resolve) => {
+            markFirstClassified = resolve
+        })
+        let releaseFirst: () => void = () => {
+            throw new Error("First classification release is not ready")
+        }
+        const firstRelease = new Promise<void>((resolve) => {
+            releaseFirst = resolve
+        })
+        const first = processSupportEvent({
+            event,
+            agentMail: harness.agentMail,
+            store,
+            classify: async (): Promise<TriageDecision> => {
+                markFirstClassified()
+                await firstRelease
+                return {
+                    category: "how_to",
+                    priority: "normal",
+                    summary: "Customer wants an account export.",
+                    knowledgeArticle: "export-data",
+                }
+            },
+        })
+        await firstClassified
+
+        const second = await processSupportEvent({
+            event,
+            agentMail: harness.agentMail,
+            store,
+            classify: async (): Promise<TriageDecision> => ({
+                category: "billing",
+                priority: "high",
+                summary: "Customer disputes a charge.",
+                knowledgeArticle: null,
+            }),
+        })
+        releaseFirst()
+        const firstResult = await first
+
+        expect(firstResult.kind).toBe("human_review")
+        expect(second.kind).toBe("human_review")
+        expect(harness.draftBodies).toHaveLength(0)
+        expect(store.get(event.event_id)?.category).toBe("billing")
+    })
+
     it("does no further work after the processed label is present", async () => {
         const harness = createAgentMailHarness()
         const store = new TriageStore(":memory:")

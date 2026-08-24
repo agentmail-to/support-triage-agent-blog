@@ -11,7 +11,6 @@ const env = z
 const agentMail = new AgentMailClient({ apiKey: env.AGENTMAIL_API_KEY })
 
 const inbox = await agentMail.inboxes.create({
-    username: "support-triage-demo",
     displayName: "Support Triage",
     clientId: "support-triage-demo-inbox",
 })

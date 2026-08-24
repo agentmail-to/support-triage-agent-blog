@@ -26,7 +26,7 @@ export function createApp(input: {
 
     app.post(
         "/webhooks",
-        express.raw({ type: "application/json" }),
+        express.raw({ type: "application/json", limit: "1mb" }),
         async (req, res) => {
             const payload = z.instanceof(Buffer).parse(req.body)
             const headers = HeaderRecordSchema.parse(
