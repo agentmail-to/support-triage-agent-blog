@@ -6,7 +6,10 @@ const env = z
     .object({
         AGENTMAIL_API_KEY: z.string().min(1),
         AGENTMAIL_INBOX_ID: z.string().min(1),
-        AGENTMAIL_DEMO_SENDER_INBOX_ID: z.string().min(1).optional(),
+        AGENTMAIL_DEMO_SENDER_INBOX_ID: z.preprocess(
+            (value) => (value === "" ? undefined : value),
+            z.string().min(1).optional(),
+        ),
     })
     .parse(process.env)
 const agentMail = new AgentMailClient({ apiKey: env.AGENTMAIL_API_KEY })
