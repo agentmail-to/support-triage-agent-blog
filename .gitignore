@@ -1,0 +1,7 @@
+.env
+.env.*
+!.env.example
+node_modules/
+triage.sqlite
+triage.sqlite-shm
+triage.sqlite-wal

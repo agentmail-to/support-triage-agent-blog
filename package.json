@@ -1,0 +1,27 @@
+{
+  "name": "agentmail-support-triage-demo",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "bun --watch src/server.ts",
+    "demo": "bun src/live-demo.ts",
+    "setup:agentmail": "bun src/setup-agentmail.ts",
+    "test": "bun test --max-concurrency 4",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@ai-sdk/openai": "^4.0.46",
+    "agentmail": "^0.5.20",
+    "ai": "^7.0.77",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "svix": "^2.0.0",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.4.0",
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.2.0",
+    "typescript": "^7.0.2"
+  }
+}
