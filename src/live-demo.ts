@@ -73,12 +73,22 @@ const [routine, billing, drafts] = await Promise.all([
     agentMail.inboxes.messages.get(env.AGENTMAIL_INBOX_ID, billingMessageId),
     agentMail.inboxes.drafts.list(env.AGENTMAIL_INBOX_ID, { limit: 100 }),
 ])
-const routineDraft = drafts.drafts.find(
+const routineDrafts = drafts.drafts.filter(
     (draft) => draft.inReplyTo === routineMessageId,
 )
-const billingDraft = drafts.drafts.find(
+const billingDrafts = drafts.drafts.filter(
     (draft) => draft.inReplyTo === billingMessageId,
 )
+if (routineDrafts.length !== 1) {
+    throw new Error(
+        `Expected exactly one routine draft, found ${routineDrafts.length}.`,
+    )
+}
+if (billingDrafts.length !== 0) {
+    throw new Error(
+        `Expected no billing drafts, found ${billingDrafts.length}.`,
+    )
+}
 
 z.object({
     routine: z.object({
@@ -118,8 +128,8 @@ z.object({
         draft: z.null(),
     }),
 }).parse({
-    routine: { labels: routine.labels, draftId: routineDraft?.draftId },
-    billing: { labels: billing.labels, draft: billingDraft ?? null },
+    routine: { labels: routine.labels, draftId: routineDrafts[0]?.draftId },
+    billing: { labels: billing.labels, draft: null },
 })
 
 console.log(
