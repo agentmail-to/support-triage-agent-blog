@@ -1,6 +1,8 @@
 .env
 .env.*
 !.env.example
+!.env.demo.example
+!.env.setup.example
 node_modules/
 triage.sqlite
 triage.sqlite-shm

@@ -6,27 +6,20 @@ const env = z
     .object({
         AGENTMAIL_API_KEY: z.string().min(1),
         AGENTMAIL_INBOX_ID: z.string().min(1),
-        AGENTMAIL_DEMO_SENDER_INBOX_ID: z.preprocess(
-            (value) => (value === "" ? undefined : value),
-            z.string().min(1).optional(),
-        ),
+        AGENTMAIL_DEMO_SENDER_API_KEY: z.string().min(1),
+        AGENTMAIL_DEMO_SENDER_INBOX_ID: z.string().min(1),
     })
     .parse(process.env)
 const agentMail = new AgentMailClient({ apiKey: env.AGENTMAIL_API_KEY })
-const senderInboxId =
-    env.AGENTMAIL_DEMO_SENDER_INBOX_ID ??
-    (
-        await agentMail.inboxes.create({
-            displayName: "Support Triage Demo Sender",
-            clientId: "support-triage-demo-sender",
-        })
-    ).inboxId
+const senderAgentMail = new AgentMailClient({
+    apiKey: env.AGENTMAIL_DEMO_SENDER_API_KEY,
+})
 const runId = new Date().toISOString().replaceAll(/[^0-9]/g, "")
 const routineSubject = `Support triage demo ${runId}: export my data`
 const billingSubject = `Support triage demo ${runId}: duplicate charge`
 
-await agentMail.inboxes.messages.send(
-    senderInboxId,
+await senderAgentMail.inboxes.messages.send(
+    env.AGENTMAIL_DEMO_SENDER_INBOX_ID,
     {
         to: [env.AGENTMAIL_INBOX_ID],
         subject: routineSubject,
@@ -34,8 +27,8 @@ await agentMail.inboxes.messages.send(
     },
     { idempotencyKey: `support-triage-routine-${runId}` },
 )
-await agentMail.inboxes.messages.send(
-    senderInboxId,
+await senderAgentMail.inboxes.messages.send(
+    env.AGENTMAIL_DEMO_SENDER_INBOX_ID,
     {
         to: [env.AGENTMAIL_INBOX_ID],
         subject: billingSubject,

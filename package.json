@@ -6,6 +6,8 @@
         "dev": "bun --watch src/server.ts",
         "demo": "bun src/live-demo.ts",
         "setup:agentmail": "bun src/setup-agentmail.ts",
+        "preview:video": "remotion studio video/index.ts --public-dir=assets",
+        "render:video": "remotion render video/index.ts SupportTriageGuided assets/support-triage-guided-run.mp4 --public-dir=assets --codec=h264 --crf=18",
         "test": "bun test --max-concurrency 4",
         "typecheck": "tsc --noEmit"
     },
@@ -19,9 +21,15 @@
         "zod": "^4.4.3"
     },
     "devDependencies": {
+        "@remotion/cli": "^4.0.516",
         "@types/bun": "^1.4.0",
         "@types/express": "^5.0.6",
         "@types/node": "^26.2.0",
+        "@types/react": "^19.2.18",
+        "@types/react-dom": "^19.2.5",
+        "react": "^19.2.8",
+        "react-dom": "^19.2.8",
+        "remotion": "^4.0.516",
         "typescript": "^7.0.2"
     }
 }
